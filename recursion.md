@@ -4,6 +4,10 @@
   - [Maximum function](#maximum-function)
     - [Replicate](#replicate)
   - [Take](#take)
+  - [Reverse](#reverse)
+  - [Zip](#zip)
+  - [elem](#elem)
+  - [Quick sort](#quick-sort)
 
 # Recursion
 
@@ -63,6 +67,49 @@ take' _ []     = []  -- If the list is empty then return the empty list. We use 
 take' n (x:xs) = x : take' (n-1) xs -- Split list into head:tail 
 ```
 
+**Haskell -> C#**
+
 Map = Select
-Aggregate = Reduce
+Reduce = Aggregate
 Where = Where
+
+## Reverse
+
+```hs
+reverse' :: [a] -> [a]
+reverse' [] = []
+reverse' (x:xs) = reverse' xs ++ [x]
+```
+
+## Zip
+
+```hs
+zip' :: [a] -> [b] -> [(a,b)] -- Definition
+zip' _ [] = [] -- If second list is empty return empty
+zip' [] _ = [] -- If first list is empty return empty
+zip' (x:xs) (y:ys) = (x,y):zip' xs ys
+```
+
+## elem
+
+```hs
+elem' :: (Eq a) => a -> [a] -> Bool -- Definition
+elem' a [] = False -- If list is empty return false
+elem' a (x:xs)  
+    | a == x    = True -- If a is equal to head return true
+    | otherwise = a `elem'` xs -- else call elem with a and  the tail and repeat until we get a result
+```
+
+## Quick sort
+
+```hs
+quicksort :: (Ord a) => [a] -> [a] -- Definition
+quicksort [] = [] -- Edge case, empty list returns empty list
+quicksort (x:xs) =  
+    let smallerSorted = quicksort [a | a <- xs, a <= x] -- List comp where a <= x
+        biggerSorted = quicksort [a | a <- xs, a > x] -- List comp where a > x
+    in  smallerSorted ++ [x] ++ biggerSorted -- See note below
+```
+
+> When you see let A in B you can think of B as the value of the statement. In an imperative language, you might write it as A; return B.
+
