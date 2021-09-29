@@ -5,16 +5,22 @@ type Operator = Double -> Double -> Double
 type Entry = (String, Operator)
 type Register = [Entry]
 
+modulu :: Double -> Double -> Double
+modulu a b = fromIntegral $ mod (round a) (round b)
+
 operatorRegister :: Register
 operatorRegister = [
         ("+", (+)),
-        ("*", (*))
+        ("*", (*)),
+        ("/", (/)),
+        ("*", (*)),
+        ("%", modulu)
     ]
 
-calculate :: String -> Double
+calculate :: String -> Maybe Double
 calculate = eval operatorRegister . words
 
-eval :: Register -> [String] -> Double
+eval :: Register -> [String] -> Maybe Double
 -- Called when only 1 element is unparsed
 -- _ means we discard the value, we ignore it.
 -- [unparsed] is matched if the parameter is a list with a single element in which case the number = the element
@@ -26,6 +32,7 @@ eval ((stringOperator, functionOperator):opRegisterTail) unparsed =
     case span (/= stringOperator) unparsed of
         (_, [])             -> eval opRegisterTail unparsed
         (beforeOp, afterOp) -> functionOperator
-                                (eval operatorRegister beforeOp)
-                                (eval operatorRegister $ drop 1 afterOp)
+                                -- <$> and <*> life the functions to understand "Maybe". Maybe is like int? in c#, nullables.
+                                <$> eval operatorRegister beforeOp
+                                <*> eval operatorRegister (drop 1 afterOp)
 

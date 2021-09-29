@@ -1,4 +1,5 @@
 module Main where
+import Control.Applicative ((<$>), (<*>))
 import Calc (calculate)
 
 
