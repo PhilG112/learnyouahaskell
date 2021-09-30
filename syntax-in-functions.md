@@ -1,5 +1,4 @@
 *Table of contents*
-
 - [Syntax in functions](#syntax-in-functions)
   - [Pattern matching](#pattern-matching)
     - [x:xs](#xxs)
