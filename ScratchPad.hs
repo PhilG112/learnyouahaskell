@@ -1,3 +1,4 @@
+{-# LANGUAGE RecordWildCards #-}
 module Main where
 import qualified Data.Map as Map
 
@@ -59,3 +60,12 @@ sumList x = sum x
 sumEvenList :: [Int] -> Int
 sumEvenList [] = 0
 sumEvenList a = sum [x | x <- a, even x]
+
+
+data Car = Car { company :: String
+               , model :: String
+               , year :: Int
+               } deriving (Show)
+
+tellCar :: Car -> String
+tellCar Car{..} = "This " ++ company ++ " " ++ model ++ " was made in " ++ show year
