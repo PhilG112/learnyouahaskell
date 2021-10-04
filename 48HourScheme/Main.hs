@@ -1,3 +1,4 @@
+{-# LANGUAGE BlockArguments #-}
 -- https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours/Parsing
 
 module Main where
@@ -15,7 +16,7 @@ main :: IO ()
 main = do
     (expr:_) <- getArgs
     print $ readExpr expr
-
+s
 data LispVal = Atom String
              | List [LispVal]
              | DottedList [LispVal] LispVal
@@ -44,7 +45,7 @@ parseString = do
     return $ String x
 
 parseNumber :: Parser LispVal
-parseNumber = liftM (Number . read) $ many1 digit
+parseNumber = many1 digit >>= return . Number . read
 
 spaces :: Parser ()
 spaces = skipMany1 space
