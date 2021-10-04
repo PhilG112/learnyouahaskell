@@ -1,6 +1,7 @@
 module Main where
 
 import Data.List (union)
+import GHC.Real (Integral)
 
 main :: IO ()
 main = print "Hello"
