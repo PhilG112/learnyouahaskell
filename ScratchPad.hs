@@ -27,8 +27,6 @@ findKey key ((k,v):xs) = if key == k
                             then Just v
                             else findKey key xs
 
-
-
 data LockerState = Taken | Free deriving (Show, Eq)
 type Code = String
 type LockerMap = Map.Map Int (LockerState, Code)
@@ -110,7 +108,6 @@ treeNums = [1,2,3,4,5,6,7,8,9]
 createTree :: Tree Integer
 createTree = foldr treeInsert EmptyTree treeNums
 
-
 -- Pig latainize strings
 
 charToString :: Char -> String
@@ -121,3 +118,8 @@ piggy [] = []
 piggy (x:xs) = xs ++ "-" ++ charToString x ++ "ay"
 
 
+fizzPop :: Int -> String
+fizzPop i
+    | i `mod` 3 == 0 = "Fizz"
+    | i `mod` 5 == 0 = "Pop"
+    | otherwise = "Not a multiple of 3 or 5!"
