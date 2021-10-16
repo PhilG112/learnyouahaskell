@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
-module Tree where
+module BST where
 
 data Tree t = EmptyTree | Node t (Tree t) (Tree t) deriving (Show, Ord, Eq)
 
@@ -12,10 +12,12 @@ insert x EmptyTree = initTree x
 insert x (Node n left right)
     | x == n = Node x left right
     | x < n = Node n (insert x left) right
-    | x > n = Node n left (insert x right) 
+    | x > n = Node n left (insert x right)
 
 -- Exists?
-
-
-
--- Find value
+exists :: (Ord a) => a -> Tree a -> Bool
+exists x EmptyTree = False
+exists x (Node n left right)
+    | x == n = True
+    | x < n = exists x left
+    | x > n = exists x right

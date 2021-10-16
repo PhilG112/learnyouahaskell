@@ -5,6 +5,7 @@ import qualified Data.Map as Map
 import Distribution.Simple.Utils (xargs)
 import GHC.Types (Bool(False))
 import GHC.Real (Integral)
+import qualified Random.PhoneBook as PB
 
 main :: IO ()
 main = print $ findKey "betty" phoneBook
