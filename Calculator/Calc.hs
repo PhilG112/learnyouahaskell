@@ -22,15 +22,15 @@ main :: IO ()
 main = print $ calculate "3 * 2 + 5 % 2"
 
 calculate :: String -> Maybe Double
-calculate = eval operatorRegister . words
+calculate s = eval operatorRegister $ words s
 
 eval :: Register -> [String] -> Maybe Double
 eval [] _ = Nothing -- No operator found.
 eval _ [] = Nothing -- If a operator don't have anything to operate on.
 eval _ [number] = Just $ read number
-eval ((operator, function):rest) unparsed =
+eval ((operator, function):xs) unparsed =
     case span (/=operator) unparsed of
-        (_, []) -> eval rest unparsed
+        (_, []) -> eval xs unparsed
         (beforeOperator, afterOperator) ->
             function
                 <$> eval operatorRegister beforeOperator

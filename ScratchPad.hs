@@ -50,7 +50,6 @@ lockerLookup lockerNumber map =
                                 then Right code
                                 else Left $ "Locker " ++ show lockerNumber ++ " is already taken!"
 
-
 -- Add two numbers
 addTwo:: Int -> Int -> Int
 addTwo a b = a + b
