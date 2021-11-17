@@ -26,7 +26,7 @@ hasBlock x (Block c t) = x == t || hasBlock x c
 
 type FilePath = String 
 
-readFile :: FilePath -> IO String 
+-- readFile :: FilePath -> IO String 
 
 -- lengthOfFile file = lengt (readFIile file) -- Type error
 
