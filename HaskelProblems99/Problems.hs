@@ -63,6 +63,3 @@ encode'' xs = map (\x -> (length x, head x)) $ group xs
 
 -- p11
 data ListItem a = Single a | Multiple Int a deriving (Show)
-
-encodeModified :: String -> [ListItem]
-encodeModified 

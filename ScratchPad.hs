@@ -73,11 +73,11 @@ tellCar :: Car -> String
 tellCar Car{..} = "This " ++ company ++ " " ++ model ++ " was made in " ++ show year
 
 
-type PhoneNumber = String 
-type Name = String 
+type PhoneNumber = String
+type Name = String
 type PhoneBook = [(Name, PhoneNumber)]
 
-isInPhoneBook :: Name -> PhoneNumber -> PhoneBook -> Bool 
+isInPhoneBook :: Name -> PhoneNumber -> PhoneBook -> Bool
 isInPhoneBook n pn pb = (n, pn) `elem` pb
 
 -- BST
@@ -95,7 +95,7 @@ treeInsert x (Node a left right) -- if the node has a left and right tree do che
     | x > a  = Node a left (treeInsert x right) -- if the value is greater than the node value, insert that node on thr right
 
 
-treeElem :: (Ord a) => a -> Tree a -> Bool 
+treeElem :: (Ord a) => a -> Tree a -> Bool
 treeElem x EmptyTree = False
 treeElem x (Node a left right)
     | x == a = True
@@ -113,16 +113,19 @@ createTree = foldr treeInsert EmptyTree treeNums
 charToString :: Char -> String
 charToString c = [c]
 
-piggy :: String -> String 
+piggy :: String -> String
 piggy [] = []
 piggy (x:xs) = xs ++ "-" ++ charToString x ++ "ay"
 
 
-fizzPop :: Int -> String
-fizzPop i
-    | i `mod` 3 == 0 = "Fizz"
-    | i `mod` 5 == 0 = "Pop"
-    | otherwise = "Not a multiple of 3 or 5!"
+lol :: String
+lol = unwords $ map fizzPop [1..10000]
+    where
+        fizzPop i
+            | i `mod` 3 == 0 && i `mod` 5 == 0 = "FizzBuzz"
+            | i `mod` 3 == 0 = "Fizz"
+            | i `mod` 5 == 0 = "Buzz"
+            | otherwise = show i
 
-calcBmis :: (RealFloat a) => [(a, a)] -> [a]  
-calcBmis xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25.0] 
+calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25.0]
