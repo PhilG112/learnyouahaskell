@@ -1,4 +1,5 @@
 {-# LANGUAGE InstanceSigs #-}
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Mongolia.Overloading where
 
 
@@ -26,5 +27,3 @@ instance MyEq a => MyEq [a] where
     (===) [] (y:ys) = False 
     (===) (x:xs) [] = False 
     (===) (x:xs) (y:ys) = x === y && xs === ys
-
--- Continue on at 45:58
