@@ -63,3 +63,31 @@ encode'' xs = map (\x -> (length x, head x)) $ group xs
 
 -- p11
 data ListItem a = Single a | Multiple Int a deriving (Show)
+
+encodeModified :: String -> [ListItem Char]
+encodeModified s = map toListItem (encode'' s)
+    where
+        toListItem (x,y) = case x of
+            1 -> Single y
+            _ -> Multiple x y
+
+-- p12
+
+decodeModified ::[ListItem Char] -> String
+decodeModified [] = []
+decodeModified (x:xs) = case x of
+  Single a -> a : decodeModified xs
+  Multiple n a -> replicate n a ++ decodeModified xs
+
+-- p13
+-- ??????
+
+-- p14
+dupe :: [a] -> [a]
+dupe [] = []
+dupe (x:xs) = x : x : dupe xs
+
+-- p15
+dupe2 :: [a] -> Int -> [a]
+dupe2 [] _ = []
+dupe2 (x:xs) n = replicate n x ++ dupe2 xs n
