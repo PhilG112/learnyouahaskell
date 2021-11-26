@@ -2,6 +2,7 @@
 module HaskelProblems99.Problems where
 
 import Data.List
+import Data.Ratio
 
 -- p1
 getLast :: [a] -> a
@@ -64,30 +65,69 @@ encode'' xs = map (\x -> (length x, head x)) $ group xs
 -- p11
 data ListItem a = Single a | Multiple Int a deriving (Show)
 
+-- Input "aaaabccaadeeee"
 encodeModified :: String -> [ListItem Char]
-encodeModified s = map toListItem (encode'' s)
+encodeModified s = map f (encode'' s)
     where
-        toListItem (x,y) = case x of
+        f (x, y) = case x of
             1 -> Single y
             _ -> Multiple x y
 
 -- p12
 
-decodeModified ::[ListItem Char] -> String
+decodeModified :: [ListItem Char] -> String
 decodeModified [] = []
 decodeModified (x:xs) = case x of
-  Single a -> a : decodeModified xs
-  Multiple n a -> replicate n a ++ decodeModified xs
+    Single a -> a : decodeModified xs
+    Multiple i a -> replicate i a ++ decodeModified xs
 
 -- p13
--- ??????
+-- ???
 
 -- p14
-dupe :: [a] -> [a]
-dupe [] = []
-dupe (x:xs) = x : x : dupe xs
+dupli :: [a] -> [a]
+dupli [] = []
+dupli (x:xs) = x : x : dupli xs
 
 -- p15
-dupe2 :: [a] -> Int -> [a]
-dupe2 [] _ = []
-dupe2 (x:xs) n = replicate n x ++ dupe2 xs n
+repli :: [a] -> Int -> [a]
+repli [] _ = []
+repli (x:xs) n = replicate n x ++ repli xs n
+
+-- p16
+dropEvery :: [a] -> Int -> [a]
+dropEvery [] _ = []
+dropEvery arr n = untup $ filter (\(a, i) -> (i `mod` 3) /= 0) (zip arr [1..])
+    where
+        untup [] = []
+        untup ((a,b):xs) = a : untup xs
+
+-- p17
+split :: String -> Int -> (String, String)
+split s n = (take n s, drop n s)
+-- split s n = splitAt n s
+
+-- p18
+slice :: [Char] -> Int -> Int -> String
+slice [] _ _ = []
+slice arr i k
+    | i > 0 = take (k - i + 1) $ drop (i - 1) arr
+
+-- p19
+-- Revisit, not working
+rotate :: [Char] -> Int -> String
+rotate _ 0 = []
+rotate (x:xs) n = rotate (xs ++ [x]) n
+rotate xs n = rotate xs (length xs + n)
+
+-- p20
+-- **** To Review ****
+removeAt :: Int -> [a] -> Maybe (a, [a])
+removeAt _ [] = Nothing
+removeAt n xs = case back of
+    [] -> Nothing
+    x:rest -> Just (x, front ++ rest)
+    where
+        (front,back) = splitAt (n - 1) xs
+
+-- p21
