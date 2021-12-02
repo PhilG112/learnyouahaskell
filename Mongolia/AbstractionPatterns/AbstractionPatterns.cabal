@@ -1,0 +1,14 @@
+name:                AbstractionPatterns
+version:             0.1.0.0
+license:             ib
+license-file:        LICENSE
+author:              Philg112
+category:            Development
+build-type:          Simple
+extra-source-files:  CHANGELOG.md
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     AbstractionPatterns
+  build-depends:       base >=4.12 && <4.13, containers
+  default-language:    Haskell2010
