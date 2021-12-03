@@ -4,8 +4,8 @@ module LeetCode.TwoSum where
 main :: IO ()
 main = print ""
 
-hhh :: (Num a, Ord a) => a -> [a] -> [Int]
-hhh num list = sol ls (reverse ls)
+twoSum :: (Num a, Ord a) => a -> [a] -> [Int]
+twoSum num list = sol ls (reverse ls)
     where
     ls = zip list [0..]
     sol [] _ = []
