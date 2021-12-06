@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE MultiWayIf #-}
 module Main where
 
 import System.Environment ( getArgs )
@@ -13,14 +12,6 @@ argumentList = [
     , "-files" -- ; separated files to compress
     ]
 
-data Args = Directory | Path | Files
-    deriving (Eq)
-
-instance Show Args where
-    show Directory = "-d"
-    show Path = "-path"
-    show Files = "-files"
-
 main :: IO ()
 main = do
     args <- getArgs
@@ -29,20 +20,13 @@ main = do
 
 parseArgs :: [String] -> IO ()
 parseArgs [] = putStrLn "Please provide an argument."
-parseArgs arr
-    | allValidArgs arr = putStrLn "Invalid args"
-    | length mappedArgs == 1 = putStrLn "ok"
-    | not (Directory `elem` mappedArgs && Path `elem` mappedArgs) = putStrLn "-path and -d must be provided together"
-    | otherwise = doWork mappedArgs
-    where
-        mappedArgs = map (\x -> if
-            | x == "-d" -> Directory
-            | x == "-path" -> Path
-            | x == "-files" -> Files
-            | otherwise -> Directory) arr
+parseArgs all
+    | not (allValidArgs all) = putStrLn "Invalid args"
+    | otherwise = doWork all
 
-doWork :: [Args] -> IO ()
-doWork = error "not implemented"
+doWork :: [String] -> IO ()
+doWork (x:xs) = case x of
+    "-d" -> putStrLn "OK"
 
 -- Refactor this
 allValidArgs :: [String] -> Bool

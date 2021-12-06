@@ -17,6 +17,6 @@ executable MultiZipper
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    base, containers, text
+    build-depends:    base, containers, text, zip
     hs-source-dirs:   app
     default-language: Haskell2010
