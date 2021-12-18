@@ -1,0 +1,12 @@
+cabal-version:      3.4
+name:               dbtest
+version:            0.1.0.0
+author:             Philg112
+maintainer:         pgrujovski@protonmail.com
+extra-source-files: CHANGELOG.md
+
+executable dbtest
+    main-is:          Main.hs
+    build-depends:    base ^>=4.14.3.0, mongoDB
+    hs-source-dirs:   app
+    default-language: Haskell2010
