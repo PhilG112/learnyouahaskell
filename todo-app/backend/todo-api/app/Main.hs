@@ -3,15 +3,16 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
 module Main where
 
-import Web.Scotty ( param, get, scotty, post, text, ActionM, json, jsonData )
+import Web.Scotty ( param, get, scotty, post, text, ActionM, json, jsonData, Parsable )
 import Data.Aeson ( FromJSON, ToJSON )
 import GHC.Generics ( Generic )
 import Database.MongoDB ( (=:), Select (select), Document )
 import Control.Monad.IO.Class (MonadIO (liftIO))
 import qualified DataStore as DB
 import qualified Data.Text.Lazy as T
+import qualified Data.Text as DT
 import qualified Data.Text.Internal
-import Data.Text hiding (head)
+import Data.Text hiding (head, map)
 import Database.MongoDB.Connection
 import Data.Bson
 import Prelude hiding (lookup)
@@ -31,6 +32,9 @@ main = do
             case res of
                 Nothing -> text "Not found"
                 Just a -> json $ (fromBSON a :: Maybe User)
+            liftIO $ putStrLn (B.lookup "firstName" (head res))
+            text $ T.pack $ show $ head res
+            -- json $ doc2User $ head res
 
         -- delete "/todo/:name" $ do
         --     text "Delete some user"
@@ -39,10 +43,11 @@ main = do
             req <- jsonData :: ActionM User
             liftIO $ putStrLn $ show $ toBSON req
             res <- liftIO $ DB.insertDoc $ toBSON req
+            text $ T.pack $ show res
             text ""
 
 data User = User
-    { firstName :: String  
+    { firstName :: String
     , lastName :: String
     } deriving (Show, Generic, Typeable, Eq)
 
