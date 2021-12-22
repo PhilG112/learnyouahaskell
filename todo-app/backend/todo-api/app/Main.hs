@@ -10,9 +10,14 @@ import Database.MongoDB ( (=:), Select (select), Document )
 import Control.Monad.IO.Class (MonadIO (liftIO))
 import qualified DataStore as DB
 import qualified Data.Text.Lazy as T
+import qualified Data.Text.Internal
 import Data.Text hiding (head)
 import Database.MongoDB.Connection
-import qualified Data.Bson as B
+import Data.Bson
+import Prelude hiding (lookup)
+import GenericBson
+import Data.Data (Typeable)
+import Data.Text
 
 main :: IO ()
 main = do
@@ -23,26 +28,25 @@ main = do
             name <- param "name"
             liftIO $ putStrLn name
             res <- DB.runQuery pipe (select ["firstName" =: name] "Test")
-            json $ doc2User $ head res
+            case res of
+                Nothing -> text "Not found"
+                Just a -> json $ (fromBSON a :: Maybe User)
 
         -- delete "/todo/:name" $ do
         --     text "Delete some user"
 
         post "/todo" $ do
             req <- jsonData :: ActionM User
-            res <- liftIO $ DB.insertDoc ["firstName" =: firstName req, "lastName" =: lastName req]
-            text v
+            liftIO $ putStrLn $ show $ toBSON req
+            res <- liftIO $ DB.insertDoc $ toBSON req
+            text ""
 
 data User = User
     { firstName :: String  
     , lastName :: String
-    } deriving (Show, Generic)
+    } deriving (Show, Generic, Typeable, Eq)
 
 instance ToJSON User
 instance FromJSON User
-
-doc2User :: Document -> User
-doc2User doc = User
-    { firstName = B.lookup "firstName" doc
-    , lastName = B.lookup "lastName" doc
-    }
+instance ToBSON User
+instance FromBSON User

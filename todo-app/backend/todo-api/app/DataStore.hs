@@ -13,8 +13,8 @@ data UserEntity = UserEntity
     , lastName :: Text
     }
 
-runQuery :: Pipe -> Query -> ActionM [Document]
-runQuery p q = access p master "Test" (find q >>= rest)
+runQuery :: Pipe -> Query -> ActionM (Maybe Document)
+runQuery p q = access p master "Test" (findOne q)
 
 insertDoc :: Document -> IO Value
 insertDoc doc = run $ insert "Test" doc
