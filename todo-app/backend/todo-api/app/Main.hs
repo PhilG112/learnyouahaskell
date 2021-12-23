@@ -3,7 +3,7 @@
 {-# LANGUAGE ExtendedDefaultRules #-}
 module Main where
 
-import Web.Scotty ( param, get, scotty, post, text, ActionM, json, jsonData, Parsable )
+import Web.Scotty ( delete, param, get, scotty, post, text, ActionM, json, jsonData, Parsable )
 import Data.Aeson ( FromJSON, ToJSON )
 import GHC.Generics ( Generic )
 import Database.MongoDB ( (=:), Select (select), Document )
@@ -18,7 +18,7 @@ import Data.Bson
 import Prelude hiding (lookup)
 import GenericBson
 import Data.Data (Typeable)
-import Data.Text
+import Data.Text hiding (head)
 
 main :: IO ()
 main = do
@@ -27,29 +27,29 @@ main = do
 
         get "/todo/:name" $ do
             name <- param "name"
-            liftIO $ putStrLn name
-            res <- DB.runQuery pipe (select ["firstName" =: name] "Test")
+            res <- liftIO $ DB.findByName name
             case res of
                 Nothing -> text "Not found"
-                Just a -> json $ (fromBSON a :: Maybe User)
-            liftIO $ putStrLn (B.lookup "firstName" (head res))
-            text $ T.pack $ show $ head res
-            -- json $ doc2User $ head res
+                Just a -> json (fromBSON a :: Maybe User)
 
-        -- delete "/todo/:name" $ do
-        --     text "Delete some user"
+        delete "/todo/:id" $ do
+            oid <- param "id"
+            liftIO $ DB.deleteDoc oid
 
         post "/todo" $ do
             req <- jsonData :: ActionM User
-            liftIO $ putStrLn $ show $ toBSON req
             res <- liftIO $ DB.insertDoc $ toBSON req
-            text $ T.pack $ show res
-            text ""
+            json $ CreateUserResponse (show res)
 
 data User = User
     { firstName :: String
     , lastName :: String
     } deriving (Show, Generic, Typeable, Eq)
+
+newtype CreateUserResponse = CreateUserResponse
+    { _id :: String
+    } deriving (Generic)
+instance ToJSON CreateUserResponse
 
 instance ToJSON User
 instance FromJSON User
