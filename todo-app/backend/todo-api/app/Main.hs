@@ -1,9 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE ExtendedDefaultRules #-}
+{-# OPTIONS_GHC -Wno-deferred-out-of-scope-variables #-}
 module Main where
 
-import Web.Scotty ( delete, param, get, scotty, post, text, ActionM, json, jsonData, Parsable )
+import Web.Scotty ( delete, param, get, scotty, post, text, ActionM, json, jsonData, Parsable, status )
 import Data.Aeson ( FromJSON, ToJSON )
 import GHC.Generics ( Generic )
 import Database.MongoDB ( (=:), Select (select), Document )
@@ -12,6 +13,7 @@ import qualified DataStore as DB
 import qualified Data.Text.Lazy as T
 import qualified Data.Text as DT
 import qualified Data.Text.Internal
+import Network.HTTP.Types.Status
 import Data.Text hiding (head, map)
 import Database.MongoDB.Connection
 import Data.Bson
@@ -29,7 +31,7 @@ main = do
             name <- param "name"
             res <- liftIO $ DB.findByName name
             case res of
-                Nothing -> text "Not found"
+                Nothing -> status404 (mkStatus 404 "NotFound") --json $ NotFoundResponse ("No user found with name: " ++ name) 404
                 Just a -> json (fromBSON a :: Maybe User)
 
         delete "/todo/:id" $ do
@@ -49,7 +51,14 @@ data User = User
 newtype CreateUserResponse = CreateUserResponse
     { _id :: String
     } deriving (Generic)
+
+data NotFoundResponse = NotFoundResponse
+    { message :: String
+    , code :: Int
+    } deriving (Generic)
+
 instance ToJSON CreateUserResponse
+instance ToJSON NotFoundResponse
 
 instance ToJSON User
 instance FromJSON User
