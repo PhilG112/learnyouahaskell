@@ -31,7 +31,7 @@ main = do
             name <- param "name"
             res <- liftIO $ DB.findByName name
             case res of
-                Nothing -> status404 (mkStatus 404 "NotFound") --json $ NotFoundResponse ("No user found with name: " ++ name) 404
+                Nothing -> status (mkStatus 404 "NotFound") --json $ NotFoundResponse ("No user found with name: " ++ name) 404
                 Just a -> json (fromBSON a :: Maybe User)
 
         delete "/todo/:id" $ do
