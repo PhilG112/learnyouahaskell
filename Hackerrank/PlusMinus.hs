@@ -1,18 +1,31 @@
+{-# LANGUAGE BlockArguments #-}
 module Hackerrank.PlusMinus where
 
 import Text.Printf
 
 -- https://www.hackerrank.com/challenges/plus-minus/problem?isFullScreen=true
 
-lengthRatio :: [Int] -> [Int] -> Double
-lengthRatio a b = fromIntegral (length a) / fromIntegral (length b)
+-- printf "%.6f\n" $ fromIntegral 2 / 5
 
-plusMinusZero :: [Int] -> String
-plusMinusZero a = unlines $ map (show . lengthRatio a) [ps, ns, zs]
-    where
-        ps = filter (> 0) a
-        ns = filter (< 0) a
-        zs = filter (== 0) a  
+lengthRatio :: [Int] -> IO ()
+lengthRatio arr = 
+    lr [length (filter (> 0) arr), length (filter (< 0) arr), length (filter (== 0) arr)] (length arr)
+
+lr :: [Int] -> Int -> IO ()
+lr [] _ = return ()
+lr arr sum = do
+    print $ div (head arr) sum
+    mapM_ (\x -> printf "%.6f" $ (fromIntegral x) / (fromIntegral sum)) arr 
+
+-- lengthRatio :: [Int] -> [Int] -> Double
+-- lengthRatio a b = fromIntegral (length a) / fromIntegral (length b)
+
+-- plusMinusZero :: [Int] -> String
+-- plusMinusZero a = unlines $ map (show . lengthRatio a) [ps, ns, zs]
+--     where
+--         ps = filter (> 0) a
+--         ns = filter (< 0) a
+--         zs = filter (== 0) a  
 
 -- plusMinus :: [Int] -> ()
 -- plusMinus arr = do
