@@ -14,8 +14,7 @@ lengthRatio arr =
 lr :: [Int] -> Int -> IO ()
 lr [] _ = return ()
 lr arr sum = do
-    print $ div (head arr) sum
-    mapM_ (\x -> printf "%.6f" $ (fromIntegral x) / (fromIntegral sum)) arr 
+    mapM_ (\x -> print $ fromIntegral x / fromIntegral sum) arr 
 
 -- lengthRatio :: [Int] -> [Int] -> Double
 -- lengthRatio a b = fromIntegral (length a) / fromIntegral (length b)
