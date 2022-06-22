@@ -8,6 +8,6 @@ likes [] = "no one likes this"
 likes arr
     | length arr >= 4 = _
     | length arr == 1 = printf "%d likes this" $ head arr
-    | length arr == 2 = _
+    | length arr == 2 = printf "%d and %d like this" x y
     | length arr == 3 = _
     | otherwise = _

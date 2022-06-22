@@ -81,6 +81,7 @@ logs/*
 
 #Temp folders
 temp/
+.vscode/
 
 #Tools and packages
 .nuget
