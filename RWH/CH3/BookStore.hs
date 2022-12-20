@@ -1,6 +1,8 @@
 module RWH.CH3.BookStore where
 
-data BookInfo = Book Int String [String] deriving (Show)
+type BookId = Int
+
+data BookInfo = Book BookId String [String] deriving (Show)
 
 data MagazineInfo = Magazine Int String [String] deriving (Show)
 
