@@ -2,6 +2,8 @@
 module ScratchPad3 where
 
 import Prelude hiding (Monad(..))
+import ScratchPad4 (dummyUsers, SortBy (Age, Name), User (..))
+import Data.List
 
 data Expr = Val Int | Div Expr Expr
 
@@ -83,3 +85,8 @@ instance Monad WithCounter where
     (>>=) :: WithCounter a -> (a -> WithCounter b) -> WithCounter b
     (>>=) = bindWithCounter
 
+users :: Maybe SortBy -> [User]
+users Nothing = dummyUsers
+users (Just s) = case s of
+    Age -> sortOn age dummyUsers
+    Name -> sortOn name dummyUsers
