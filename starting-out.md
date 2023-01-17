@@ -1,6 +1,6 @@
 *Table of contents*
 - [Starting out](#starting-out)
-  - [Ready, set, go!](#ready-set-go)
+  - [Ready, set, go!test](#ready-set-gotest)
   - [Baby's first functions](#babys-first-functions)
     - [Anatomy of a function](#anatomy-of-a-function)
     - [Call functions from other functions](#call-functions-from-other-functions)
@@ -14,7 +14,7 @@
 
 # Starting out
 
-## Ready, set, go!
+## Ready, set, go!test
 
 **succ gets the successor**
 
