@@ -73,3 +73,6 @@ showPiDouble :: Reader Config String
 showPiDouble = local f showPi
     where
         f cfg = cfg {cfgDecimals = 2 * cfgDecimals cfg}
+
+ff :: [a] -> [a]
+ff = foldr (\e acc -> acc ++ [e]) []
