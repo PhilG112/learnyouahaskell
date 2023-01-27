@@ -1,6 +1,7 @@
 module ScratchPad4 (User (..), dummyUser, dummyUsers, SortBy (Age, Name),) where
 import Data.Time
 import Data.List
+import Data.Maybe (fromMaybe)
 
 data SortBy = Age | Name
 
@@ -27,3 +28,5 @@ users Nothing = dummyUsers
 users (Just s) = case s of
     Age -> sortOn age dummyUsers
     Name -> sortOn name dummyUsers
+
+users2 :: Maybe 
