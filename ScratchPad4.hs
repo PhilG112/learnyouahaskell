@@ -28,5 +28,3 @@ users Nothing = dummyUsers
 users (Just s) = case s of
     Age -> sortOn age dummyUsers
     Name -> sortOn name dummyUsers
-
-users2 :: Maybe 
