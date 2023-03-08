@@ -1,5 +1,5 @@
 module OrderPlease where
-import Data.Char
+import Data.Char ( isDigit )
 import Data.List (sortBy, sortOn, find)
 
 -- https://www.codewars.com/kata/55c45be3b2079eccff00010f/train/haskell
