@@ -4,14 +4,14 @@ main :: IO ()
 main = print "hi"
 
 -- Unit 1 Lesson 4
-compareLastNames :: Ord a1 => (a2, a1) -> (a3, a1) -> Ordering
+compareLastNames :: Ord a1 => a1 -> a1 -> Ordering
 compareLastNames name1 name2
   | lastName1 > lastName2 = GT
   | lastName1 < lastName2 = LT
   | otherwise = EQ
   where
-      lastName1 = snd name1
-      lastName2 = snd name2
+      lastName1 = name1
+      lastName2 = name2
 
 -- Q4.1
 compareLastNamesWithCompare :: Ord l1 => (String, l1) -> (String, l1) -> Ordering
