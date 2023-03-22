@@ -117,13 +117,15 @@ apple m mm = banana (\f -> furry' f m) mm
 -- Exercise 14
 -- Relative Difficulty: 6
 moppy :: (Misty m) => [a] -> (a -> m b) -> m [b]
-moppy xs f = _-- Stuck here :(
+moppy [] _ = unicorn []
+moppy (x:xs) f = banana (\b -> banana (\bs -> unicorn (b:bs)) (moppy xs f)) (f x)
 
 -- Exercise 15
 -- Relative Difficulty: 6
 -- (bonus: use moppy)
 sausage :: (Misty m) => [m a] -> m [a]
-sausage = error "todo"
+sausage [] = unicorn []
+sausage (x:xs) =  
 
 -- Exercise 16
 -- Relative Difficulty: 6
