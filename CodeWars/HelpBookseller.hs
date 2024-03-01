@@ -11,9 +11,9 @@ stocklist xs (y:ys) = (y, countStock xs y) : stocklist xs ys
 
 countStock :: [Stock] -> Char -> Int
 countStock [] _ = 0
-countStock xs c = sum $ map (s c) xs
+countStock xs c = sum $ map (f c) xs
     where
-        s c (Stock s i) = if head s == c then i else 0
+        f c (Stock s i) = if head s == c then i else 0
 
 -- best solution:
 
