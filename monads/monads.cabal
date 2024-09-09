@@ -1,32 +1,40 @@
-cabal-version:      3.4
-name:               monads
-version:            0.1.0.0
+cabal-version:   3.4
+name:            monads
+version:         0.1.0.0
+
 -- synopsis:
 -- description:
 -- license:            BSD-3-Clause
 -- license-file:       LICENSE
-author:             philg112
-maintainer:         none
+author:          philg112
+maintainer:      none
+
 -- copyright:
-build-type:         Simple
-extra-doc-files:    CHANGELOG.md
+build-type:      Simple
+extra-doc-files: CHANGELOG.md
+
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall
+  ghc-options: -Wall
 
 executable monads
-    import:           warnings
-    main-is:          Main.hs
-    -- other-modules:
-    -- other-extensions:
-    build-depends:    base ^>=4.20.0.0
-        , servant
-        , servant-server
-        , aeson
-        , mtl
-        , containers
-        , text
-        , aeson
-    hs-source-dirs:   app
-    default-language: Haskell2010
+  import:           warnings
+  main-is:          Main.hs
+
+  -- other-modules:
+  -- other-extensions:
+  build-depends:
+    , aeson
+    , base            ^>=4.20.0.0
+    , containers
+    , mtl
+    , servant
+    , servant-server
+    , text
+    , time
+    , wai
+    , warp
+
+  hs-source-dirs:   app
+  default-language: Haskell2010
